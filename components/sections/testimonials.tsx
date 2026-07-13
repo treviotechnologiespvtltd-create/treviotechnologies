@@ -17,7 +17,7 @@ const TESTIMONIALS = [
     quote:
       "From UI/UX design to final deployment, the entire process was smooth and transparent. The team was highly responsive, met every milestone on time, and built a modern web application that exceeded our expectations.",
     name: "Priya Patel",
-    role: "Founder, Healthcare Startup",
+    role: "Founder, Healthcare",
   },
   {
     quote:

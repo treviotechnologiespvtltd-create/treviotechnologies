@@ -54,7 +54,7 @@ export default function Hero() {
           variants={item}
           className="eyebrow eyebrow--online mb-6 rounded-full glass px-3 py-1.5"
         >
-          Trevio Technologies — Now Building
+          Trevio Technologies — Your AI & Software Development Partner
         </motion.span>
 
         <motion.h1
