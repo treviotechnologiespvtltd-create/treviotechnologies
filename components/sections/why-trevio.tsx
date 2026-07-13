@@ -10,6 +10,7 @@ import {
   LifeBuoy,
   ArrowRight,
 } from "lucide-react";
+
 const POINTS = [
   {
     icon: Zap,
@@ -52,6 +53,13 @@ const POINTS = [
     desc: "We leverage Next.js, React, Flutter, AI, cloud infrastructure, automation, and enterprise-grade technologies to build modern digital products that remain relevant for years.",
   },
 ];
+
+// Deterministic positions so server-rendered and client-rendered markup match
+// (Math.random() here would cause a hydration mismatch in Next.js).
+const PARTICLE_POSITIONS = Array.from({ length: 14 }, (_, index) => ({
+  left: `${(index * 37 + 13) % 100}%`,
+  top: `${(index * 61 + 29) % 100}%`,
+}));
 
 export default function WhyTrevio() {
   return (
@@ -149,118 +157,115 @@ export default function WhyTrevio() {
             </p>
           </div>
         </motion.div>
+
         {/* Premium CTA */}
-<motion.div
-  initial={{ opacity: 0, y: 40 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.7 }}
-  className="relative mt-20 overflow-hidden rounded-3xl border border-line bg-gradient-to-r from-royal/10 via-cyan/5 to-royal/10 p-10 text-center backdrop-blur-xl"
->
-  {/* Background Glow */}
-  <div className="absolute -left-24 top-0 h-64 w-64 rounded-full bg-royal/20 blur-3xl" />
-  <div className="absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-cyan/20 blur-3xl" />
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="relative mt-20 overflow-hidden rounded-3xl border border-line bg-gradient-to-r from-royal/10 via-cyan/5 to-royal/10 p-10 text-center backdrop-blur-xl"
+        >
+          {/* Background Glow */}
+          <div className="absolute -left-24 top-0 h-64 w-64 rounded-full bg-royal/20 blur-3xl" />
+          <div className="absolute -right-24 bottom-0 h-64 w-64 rounded-full bg-cyan/20 blur-3xl" />
 
-  {/* Floating Particles */}
-  {Array.from({ length: 14 }).map((_, i) => (
-    <motion.span
-      key={i}
-      className="absolute h-2 w-2 rounded-full bg-white/20"
-      style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-      }}
-      animate={{
-        y: [-8, 8, -8],
-        opacity: [0.25, 0.8, 0.25],
-      }}
-      transition={{
-        duration: 3 + (i % 4),
-        repeat: Infinity,
-        ease: "easeInOut",
-        delay: i * 0.2,
-      }}
-    />
-  ))}
+          {/* Floating Particles */}
+          {PARTICLE_POSITIONS.map((position, i) => (
+            <motion.span
+              key={i}
+              className="absolute h-2 w-2 rounded-full bg-white/20"
+              style={position}
+              animate={{
+                y: [-8, 8, -8],
+                opacity: [0.25, 0.8, 0.25],
+              }}
+              transition={{
+                duration: 3 + (i % 4),
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.2,
+              }}
+            />
+          ))}
 
-  <div className="relative z-10">
-    <motion.h2
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.2 }}
-      className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
-    >
-      Ready to Build Your Next Digital Product?
-    </motion.h2>
+          <div className="relative z-10">
+            <motion.h2
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+            >
+              Ready to Build Your Next Digital Product?
+            </motion.h2>
 
-    <motion.p
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.3 }}
-      className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted"
-    >
-      Whether you're building a custom website, mobile application, CRM,
-      ERP, or an AI-powered platform, our team is ready to transform
-      your vision into scalable, high-performance software.
-    </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted"
+            >
+              Whether you're building a custom website, mobile application, CRM,
+              ERP, or an AI-powered platform, our team is ready to transform
+              your vision into scalable, high-performance software.
+            </motion.p>
 
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.45 }}
-      className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-    >
-      {/* Primary Button */}
-      <a
-        href="#contact"
-        className="group relative overflow-hidden rounded-xl bg-royal px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-2xl hover:shadow-royal/30"
-      >
-        {/* Shine Effect */}
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.45 }}
+              className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+            >
+              {/* Primary Button */}
+              <a
+                href="#contact"
+                className="group relative overflow-hidden rounded-xl bg-royal px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-2xl hover:shadow-royal/30"
+              >
+                {/* Shine Effect */}
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
 
-        <span className="relative flex items-center gap-2">
-          Book a Free Consultation
+                <span className="relative flex items-center gap-2">
+                  Book a Free Consultation
 
-          <ArrowRight
-            size={18}
-            className="transition-transform duration-300 group-hover:translate-x-1"
-          />
-        </span>
-      </a>
+                  <ArrowRight
+                    size={18}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </span>
+              </a>
 
-      {/* Secondary Button */}
-      <a
-        href="#services"
-        className="rounded-xl border border-line bg-card/50 px-8 py-4 font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-royal/50 hover:bg-card"
-      >
-        View Our Services
-      </a>
-    </motion.div>
+              {/* Secondary Button */}
+              <a
+                href="#services"
+                className="rounded-xl border border-line bg-card/50 px-8 py-4 font-semibold text-ink backdrop-blur transition-all duration-300 hover:border-royal/50 hover:bg-card"
+              >
+                View Our Services
+              </a>
+            </motion.div>
 
-    {/* Trust Line */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.6 }}
-      className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-muted"
-    >
-      <span>✓ Free consultation</span>
+            {/* Trust Line */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+              className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-muted"
+            >
+              <span>✓ Free consultation</span>
 
-      <span className="hidden sm:block h-1 w-1 rounded-full bg-muted" />
+              <span className="hidden sm:block h-1 w-1 rounded-full bg-muted" />
 
-      <span>✓ No obligation</span>
+              <span>✓ No obligation</span>
 
-      <span className="hidden sm:block h-1 w-1 rounded-full bg-muted" />
+              <span className="hidden sm:block h-1 w-1 rounded-full bg-muted" />
 
-      <span>✓ Response within 24 hours</span>
-    </motion.div>
-  </div>
-</motion.div>
-        
+              <span>✓ Response within 24 hours</span>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
