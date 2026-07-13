@@ -82,7 +82,7 @@ export default function WhyTrevio() {
               At Trevio Technologies, we believe software should solve business
               problems—not create new ones. Every solution we build combines
               modern engineering, thoughtful design, AI innovation, and
-              long-term maintainability. Whether you're a startup launching your
+              long-term maintainability. Whether you&apos;re a startup launching your
               first product or an enterprise modernizing legacy systems, our
               focus remains the same: deliver reliable technology that drives
               measurable business growth.
@@ -207,7 +207,7 @@ export default function WhyTrevio() {
               transition={{ delay: 0.3 }}
               className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted"
             >
-              Whether you're building a custom website, mobile application, CRM,
+              Whether you&apos;re building a custom website, mobile application, CRM,
               ERP, or an AI-powered platform, our team is ready to transform
               your vision into scalable, high-performance software.
             </motion.p>
