@@ -55,7 +55,7 @@ export default function Portfolio() {
 
           <p className="mt-4 text-muted">
             A selection of AI platforms, enterprise applications, and digital
-            products we've designed and engineered.
+            products we&apos;ve designed and engineered.
           </p>
         </div>
 
