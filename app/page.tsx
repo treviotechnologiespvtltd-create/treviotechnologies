@@ -15,8 +15,8 @@ import Portfolio from "@/components/sections/portfolio";
 import FinalCTA from "@/components/sections/final-cta";
 import CaseStudies from "@/components/sections/case-studies";
 import Testimonials from "@/components/sections/testimonials";
-import Pricing from "@/components/sections/pricing";
 import Estimator from "@/components/sections/estimator";
+import Pricing from "@/components/sections/pricing";
 import FAQ from "@/components/sections/faq";
 import Newsletter from "@/components/sections/newsletter";
 import Contact from "@/components/sections/contact";
@@ -46,8 +46,8 @@ export default function Home() {
           <FinalCTA />
           <CaseStudies />
           <Testimonials />
-          <Pricing />
           <Estimator />
+          <Pricing />
           <FAQ />
           <Contact />
           <Newsletter />

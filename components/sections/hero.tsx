@@ -32,17 +32,45 @@ export default function Hero() {
       className="relative flex min-h-screen flex-col justify-center overflow-hidden pt-24"
     >
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-[0.35] mix-blend-luminosity"
+        className="hero-photo absolute inset-0 bg-cover bg-center opacity-[0.56] mix-blend-luminosity"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80')",
         }}
       />
-      <div className="grid-fade absolute inset-0" />
+      <motion.div
+        aria-hidden="true"
+        className="grid-fade absolute inset-0"
+        animate={{ opacity: [0.28, 0.5, 0.28] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
       <div className="absolute inset-0 opacity-70">
         <ParticleNetwork />
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-void/40 via-transparent to-void" />
+      <motion.div
+        aria-hidden="true"
+        className="absolute left-[8%] top-[18%] h-56 w-56 rounded-full bg-cyan/10 blur-3xl"
+        animate={{ x: [0, 30, 0], y: [0, -18, 0], opacity: [0.25, 0.6, 0.25] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="absolute right-[10%] top-[28%] h-72 w-72 rounded-full bg-royal/10 blur-3xl"
+        animate={{ x: [0, -24, 0], y: [0, 20, 0], opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="absolute bottom-[12%] left-[34%] h-40 w-40 rounded-full bg-emerald-300/10 blur-3xl"
+        animate={{ scale: [1, 1.12, 1], opacity: [0.18, 0.42, 0.18] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-void/20 via-transparent to-void/80"
+        animate={{ opacity: [0.45, 0.7, 0.45] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       <motion.div
         variants={container}
@@ -54,7 +82,7 @@ export default function Hero() {
           variants={item}
           className="eyebrow eyebrow--online mb-6 rounded-full glass px-3 py-1.5"
         >
-          Trevio Technologies — Your AI & Software Development Partner
+          Trevio Technologies - Your AI & Software Development Partner
         </motion.span>
 
         <motion.h1
@@ -72,10 +100,7 @@ export default function Hero() {
           variants={item}
           className="mt-6 max-w-xl text-base text-muted sm:text-lg"
         >
-          Trevio Technologies designs and develops scalable websites, mobile
-          applications, enterprise software, AI-powered solutions, and
-          business automation platforms that help startups, SMEs, and
-          enterprises innovate with confidence.
+          Trevio Technologies designs and develops scalable websites, mobile applications, enterprise software, AI-powered solutions, and business automation platforms that help startups, SMEs, and enterprises innovate with confidence.
         </motion.p>
 
         <motion.div variants={item} className="mt-9 flex flex-wrap items-center gap-4">
@@ -128,7 +153,7 @@ export default function Hero() {
             ["100%", "Custom Solutions"],
             ["AI", "Driven Development"],
             ["E2E", "End-to-End Support"],
-            ["∞", "Scalable Architecture"],
+            ["8", "Scalable Architecture"],
           ].map(([stat, label]) => (
             <div key={label}>
               <div className="font-display text-2xl font-semibold text-ink sm:text-3xl">

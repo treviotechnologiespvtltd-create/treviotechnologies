@@ -16,8 +16,8 @@ const COLUMNS = [
     links: [
       { label: "Services", href: "#services" },
       { label: "Industries", href: "#industries" },
+      { label: "Project Estimator", href: "#estimator" },
       { label: "Pricing", href: "#pricing" },
-      { label: "Estimator", href: "#estimator" },
     ],
   },
   {
@@ -90,7 +90,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t border-line py-6 pb-20 text-xs text-muted sm:flex-row md:pb-6">
-          <p>© {new Date().getFullYear()} Trevio Technologies.</p>
+          <p>� {new Date().getFullYear()} Trevio Technologies.</p>
           <p className="font-mono">system status: all green</p>
         </div>
       </div>

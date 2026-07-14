@@ -2,12 +2,13 @@
 
 import { useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useTheme } from "next-themes";
 import * as THREE from "three";
 
-const NODE_COUNT = 140;
-const CONNECT_DISTANCE = 2.6;
+const NODE_COUNT = 160;
+const CONNECT_DISTANCE = 2.8;
 
-function Network() {
+function Network({ isLight }: { isLight: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
   const lineRef = useRef<THREE.LineSegments>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -17,12 +18,12 @@ function Network() {
     const positions = new Float32Array(NODE_COUNT * 3);
     const velocities = new Float32Array(NODE_COUNT * 3);
     for (let i = 0; i < NODE_COUNT; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 14;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 8;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 6;
-      velocities[i * 3] = (Math.random() - 0.5) * 0.004;
-      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.004;
-      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.004;
+      positions[i * 3] = (Math.random() - 0.5) * 15;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 9;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 7;
+      velocities[i * 3] = (Math.random() - 0.5) * 0.0045;
+      velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.0045;
+      velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.0045;
     }
     return { positions, velocities };
   }, []);
@@ -38,8 +39,7 @@ function Network() {
   }, []);
 
   useFrame((state) => {
-    const posAttr = pointsRef.current?.geometry.attributes
-      .position as THREE.BufferAttribute;
+    const posAttr = pointsRef.current?.geometry.attributes.position as THREE.BufferAttribute;
     if (!posAttr) return;
 
     for (let i = 0; i < NODE_COUNT; i++) {
@@ -47,18 +47,16 @@ function Network() {
       posAttr.array[i * 3 + 1] += velocities[i * 3 + 1];
       posAttr.array[i * 3 + 2] += velocities[i * 3 + 2];
 
-      for (let a = 0; a < 3; a++) {
-        const bound = a === 2 ? 3 : a === 1 ? 4 : 7;
-        if (Math.abs(posAttr.array[i * 3 + a]) > bound) {
-          velocities[i * 3 + a] *= -1;
+      for (let axis = 0; axis < 3; axis++) {
+        const bound = axis === 2 ? 3 : axis === 1 ? 4 : 7;
+        if (Math.abs(posAttr.array[i * 3 + axis]) > bound) {
+          velocities[i * 3 + axis] *= -1;
         }
       }
     }
     posAttr.needsUpdate = true;
 
-    // Rebuild connecting lines within distance threshold
-    const linePos = lineGeometry.attributes.position
-      .array as Float32Array;
+    const linePos = lineGeometry.attributes.position.array as Float32Array;
     let segIndex = 0;
     for (let i = 0; i < NODE_COUNT && segIndex < linePos.length - 6; i++) {
       let connections = 0;
@@ -88,12 +86,9 @@ function Network() {
     if (groupRef.current) {
       const targetY = (pointer.x * viewport.width) / 90;
       const targetX = (-pointer.y * viewport.height) / 90;
-      groupRef.current.rotation.y +=
-        (targetY - groupRef.current.rotation.y) * 0.02;
-      groupRef.current.rotation.x +=
-        (targetX - groupRef.current.rotation.x) * 0.02;
-      groupRef.current.rotation.z =
-        Math.sin(state.clock.elapsedTime * 0.05) * 0.05;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.02;
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.02;
+      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.05) * 0.05;
     }
   });
 
@@ -110,21 +105,28 @@ function Network() {
           />
         </bufferGeometry>
         <pointsMaterial
-          size={0.045}
-          color="#4fe0ff"
+          size={0.05}
+          color={isLight ? "#0b7285" : "#4fe0ff"}
           transparent
-          opacity={0.9}
+          opacity={isLight ? 0.92 : 0.9}
           sizeAttenuation
         />
       </points>
       <lineSegments ref={lineRef} geometry={lineGeometry}>
-        <lineBasicMaterial color="#3b5bff" transparent opacity={0.18} />
+        <lineBasicMaterial
+          color={isLight ? "#3b5bff" : "#3b5bff"}
+          transparent
+          opacity={isLight ? 0.22 : 0.18}
+        />
       </lineSegments>
     </group>
   );
 }
 
 export default function ParticleNetwork() {
+  const { resolvedTheme } = useTheme();
+  const isLight = resolvedTheme === "light";
+
   return (
     <Canvas
       camera={{ position: [0, 0, 8], fov: 55 }}
@@ -132,9 +134,9 @@ export default function ParticleNetwork() {
       gl={{ antialias: true, alpha: true }}
       className="!absolute inset-0"
     >
-      <ambientLight intensity={0.6} />
-      <Network />
-      <fog attach="fog" args={["#05070d", 6, 14]} />
+      <ambientLight intensity={isLight ? 1.0 : 0.6} />
+      <Network isLight={isLight} />
+      <fog attach="fog" args={[isLight ? "#f5f7fc" : "#05070d", 5, 15]} />
     </Canvas>
   );
 }

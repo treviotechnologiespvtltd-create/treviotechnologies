@@ -11,6 +11,7 @@ const LINKS = [
   { label: "Services", href: "#services" },
   { label: "Why Trevio", href: "#why-trevio" },
   { label: "Work", href: "#portfolio" },
+  { label: "Project Estimator", href: "#estimator" },
   { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
@@ -39,11 +40,7 @@ export default function Navbar() {
           scrolled ? "glass shadow-[0_8px_40px_-12px_rgba(59,91,255,0.35)]" : "bg-transparent"
         )}
       >
-        <a
-          href="#top"
-          data-cursor-active
-          className="flex items-center gap-2.5"
-        >
+        <a href="#top" data-cursor-active className="flex items-center gap-2.5">
           <Image
             src="/logo.png"
             alt="Trevio Technologies"

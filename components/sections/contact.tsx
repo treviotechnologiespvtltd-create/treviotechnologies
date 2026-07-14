@@ -10,7 +10,7 @@ import { useState } from "react";
 const schema = z.object({
   name: z.string().min(2, "Enter your name"),
   email: z.string().email("Enter a valid email"),
-  budget: z.string().min(1, "Select a budget range"),
+  service: z.string().min(1, "Select a service"),
   message: z.string().min(10, "Tell us a bit more about the project"),
 });
 
@@ -37,14 +37,14 @@ export default function Contact() {
       });
 
       if (!response.ok) {
-        throw new Error("We couldn’t send your message right now.");
+        throw new Error("We could not send your message right now.");
       }
 
       setSubmitted(true);
       reset();
     } catch (error) {
       setSubmitError(
-        error instanceof Error ? error.message : "We couldn’t send your message right now."
+        error instanceof Error ? error.message : "We could not send your message right now."
       );
     }
   }
@@ -60,8 +60,7 @@ export default function Contact() {
             worth showing off.
           </h2>
           <p className="mt-5 max-w-md text-muted">
-            Tell us what you&apos;re building. We&apos;ll reply within one
-            business day with next steps — no sales script, just engineers.
+            Tell us what you&apos;re building. We&apos;ll reply within one business day with next steps - no sales script, just engineers.
           </p>
           <div className="mt-8 space-y-4 text-sm">
             <div>
@@ -85,8 +84,7 @@ export default function Contact() {
                 </a>
                 <a href="tel:+919974745061" className="transition-colors hover:text-cyan">
                   +91 99747 45061
-                </a>              
-                
+                </a>
               </div>
             </div>
             <div>
@@ -94,7 +92,7 @@ export default function Contact() {
                 Business Hours
               </p>
               <p className="mt-1 text-muted">
-                Monday – Saturday, 10:00 AM – 7:00 PM IST
+                Monday - Saturday, 10:00 AM - 7:00 PM IST
               </p>
             </div>
           </div>
@@ -116,11 +114,7 @@ export default function Contact() {
               </p>
             </div>
           ) : (
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-              className="flex flex-col gap-4"
-            >
+            <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
               <div>
                 <label className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-muted">
                   Name
@@ -155,24 +149,26 @@ export default function Contact() {
 
               <div>
                 <label className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-muted">
-                  Budget range
+                  Select service
                 </label>
                 <select
-                  {...register("budget")}
+                  {...register("service")}
                   defaultValue=""
                   className="w-full rounded-lg border border-line bg-surface-2 px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-royal"
                 >
                   <option value="" disabled>
-                    Select a range
+                    Choose a service
                   </option>
-                  <option value="<2l">Under ₹2 Lakh</option>
-                  <option value="2-10l">₹2 Lakh – ₹10 Lakh</option>
-                  <option value="10-40l">₹10 Lakh – ₹40 Lakh</option>
-                  <option value="40l+">₹40 Lakh+</option>
+                  <option value="Custom Website">Custom Website</option>
+                  <option value="Mobile Application">Mobile Application</option>
+                  <option value="AI Solutions">AI Solutions</option>
+                  <option value="CRM Solution">CRM Solution</option>
+                  <option value="ERP Platform">ERP Platform</option>
+                  <option value="Enterprise Software">Enterprise Software</option>
                 </select>
-                {errors.budget && (
+                {errors.service && (
                   <p className="mt-1 text-xs text-red-400">
-                    {errors.budget.message}
+                    {errors.service.message}
                   </p>
                 )}
               </div>

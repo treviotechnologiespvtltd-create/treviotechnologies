@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { type, name, email, budget, message } = body;
+    const { type, name, email, service, budget, message } = body;
 
     const recipient = "treviotechnologies@outlook.com";
     const subject =
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         ? [
             `Name: ${name ?? ""}`,
             `Email: ${email ?? ""}`,
-            `Budget: ${budget ?? ""}`,
+            `Service: ${service ?? budget ?? ""}`,
             `Message: ${message ?? ""}`,
           ].join("\n")
         : `Email: ${email ?? ""}`;

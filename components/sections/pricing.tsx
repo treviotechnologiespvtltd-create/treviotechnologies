@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 const TIERS = [
   {
     name: "Custom Website",
-    price: "Custom",
-    desc: "Tailored pricing based on project requirements.",
+    price: "starting from ₹ 9999*",
+    desc: "Premium custom websites for brands that need a polished online presence.",
     features: [
       "Responsive, SEO-friendly build",
       "Custom design system",
@@ -20,8 +20,8 @@ const TIERS = [
   },
   {
     name: "Mobile Application",
-    price: "Custom",
-    desc: "Native or cross-platform apps scoped to your roadmap.",
+    price: "starting from ₹14999*",
+    desc: "iOS and Android app builds scoped around your product roadmap.",
     features: [
       "iOS & Android from one codebase",
       "API & third-party integrations",
@@ -32,9 +32,22 @@ const TIERS = [
     cta: "Get Custom Quote",
   },
   {
+    name: "AI Solutions",
+    price: "starting from ₹19999*",
+    desc: "AI assistants, automation, and workflow intelligence for real business use.",
+    features: [
+      "AI-powered products & agents",
+      "Data pipeline & model integration",
+      "Production-grade interfaces",
+      "Post-launch support included",
+    ],
+    highlight: false,
+    cta: "Book Consultation",
+  },
+  {
     name: "CRM Solution",
-    price: "Custom",
-    desc: "Customer relationship systems built around your workflow.",
+    price: "contact us",
+    desc: "Customer relationship systems built around your sales process and team structure.",
     features: [
       "Custom pipelines & automations",
       "Team roles & permissions",
@@ -46,8 +59,8 @@ const TIERS = [
   },
   {
     name: "ERP Platform",
-    price: "Custom",
-    desc: "Operations, inventory, HR, and finance in one system.",
+    price: "contact us",
+    desc: "Operations, inventory, HR, and finance in one connected platform.",
     features: [
       "Multi-module architecture",
       "Role-based access control",
@@ -59,8 +72,8 @@ const TIERS = [
   },
   {
     name: "Enterprise Software",
-    price: "Custom",
-    desc: "Multi-system builds and ongoing engineering partnership.",
+    price: "contact us",
+    desc: "Complex systems, integrations, and long-term product engineering support.",
     features: [
       "Multiple integrated systems",
       "SLA-backed support",
@@ -69,19 +82,6 @@ const TIERS = [
     ],
     highlight: false,
     cta: "Contact Sales",
-  },
-  {
-    name: "AI Solutions",
-    price: "Custom",
-    desc: "LLM integrations, copilots, and intelligent automation.",
-    features: [
-      "AI-powered products & agents",
-      "Data pipeline & model integration",
-      "Production-grade interfaces",
-      "Post-launch support included",
-    ],
-    highlight: false,
-    cta: "Book Consultation",
   },
 ];
 
@@ -97,8 +97,8 @@ export default function Pricing() {
             for every business.
           </h2>
           <p className="mt-4 text-muted">
-            No fixed prices. Every project is quoted after a scoping call,
-            tailored to your requirements.
+            Clear starting points for smaller builds, and custom scoping for CRM,
+            ERP, and enterprise platforms.
           </p>
         </div>
 
@@ -114,7 +114,7 @@ export default function Pricing() {
                 "relative flex flex-col rounded-2xl p-7",
                 t.highlight
                   ? "border-2 border-royal bg-surface shadow-[0_0_50px_-12px_rgba(59,91,255,0.5)]"
-                  : "border border-line"
+                  : "border border-line bg-card/40"
               )}
             >
               {t.highlight && (
@@ -133,10 +133,7 @@ export default function Pricing() {
               <ul className="mt-6 flex flex-col gap-3">
                 {t.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5 text-sm">
-                    <Check
-                      size={16}
-                      className="mt-0.5 shrink-0 text-success"
-                    />
+                    <Check size={16} className="mt-0.5 shrink-0 text-success" />
                     <span className="text-muted">{f}</span>
                   </li>
                 ))}

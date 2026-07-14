@@ -13,38 +13,97 @@ type Answers = {
 const STEPS = ["type", "timeline", "business", "result"] as const;
 
 const TYPE_OPTIONS = [
-  "Website",
-  "Web App / CRM",
-  "AI Product",
-  "Mobile App",
+  "Custom Website",
+  "Mobile Application",
+  "AI Solutions",
+  "CRM Solution",
+  "ERP Platform",
+  "Enterprise Software",
 ];
-const TIMELINE_OPTIONS = ["ASAP (< 1 month)", "1–3 months", "3+ months", "Not sure yet"];
+const TIMELINE_OPTIONS = ["ASAP (< 1 month)", "1-3 months", "3+ months", "Not sure yet"];
 const BUSINESS_OPTIONS = ["Startup", "SMB", "Enterprise", "Personal / Solo"];
 
+function formatPrice(value: number) {
+  return `₹${value.toLocaleString("en-IN")}`;
+}
+
 function getRecommendation(a: Answers) {
-  const base: Record<string, { tier: string; note: string }> = {
-    Website: {
+  const base: Record<
+    string,
+    { tier: string; note: string; estimate: string; hint: string }
+  > = {
+    "Custom Website": {
       tier: "Custom Website",
-      note: "A focused marketing site with a strong design system.",
+      note: "A focused website with clear messaging, polished visuals, and conversion-friendly structure.",
+      estimate: "From ₹9,999*",
+      hint: "Best for landing pages, marketing sites, and company websites.",
     },
-    "Web App / CRM": {
-      tier: "CRM / Web Platform",
-      note: "Custom dashboard, auth, and integrations tailored to your workflow.",
-    },
-    "AI Product": {
-      tier: "AI Solution",
-      note: "LLM integration, data pipeline, and a production-grade interface.",
-    },
-    "Mobile App": {
+    "Mobile Application": {
       tier: "Mobile Application",
-      note: "Cross-platform build with native-feel interactions.",
+      note: "Cross-platform mobile app development with modern UI and scalable architecture.",
+      estimate: "From ₹14,999*",
+      hint: "Great for customer-facing apps and internal tools.",
+    },
+    "AI Solutions": {
+      tier: "AI Solutions",
+      note: "AI features, assistants, automation, and integrations tailored to your workflows.",
+      estimate: "From ₹19,999*",
+      hint: "Ideal when AI needs to solve a specific business bottleneck.",
+    },
+    "CRM Solution": {
+      tier: "CRM Solution",
+      note: "Sales pipelines, customer workflows, and reporting tailored to your process.",
+      estimate: "Custom estimate",
+      hint: "We scope this based on users, workflows, and integrations.",
+    },
+    "ERP Platform": {
+      tier: "ERP Platform",
+      note: "A connected operations platform for inventory, finance, HR, and back-office teams.",
+      estimate: "Custom estimate",
+      hint: "Best for multi-department systems with more complexity.",
+    },
+    "Enterprise Software": {
+      tier: "Enterprise Software",
+      note: "Large-scale software builds with governance, integrations, and long-term support.",
+      estimate: "Custom estimate",
+      hint: "Recommended for multi-system or enterprise-grade initiatives.",
     },
   };
 
-  const fallback = { tier: "Custom Solution", note: "We'll scope this precisely on a call." };
+  const fallback = {
+    tier: "Custom Solution",
+    note: "We will scope this precisely on a call.",
+    estimate: "Custom estimate",
+    hint: "We can refine the number after the quick questions below.",
+  };
+
   const rec = (a.type && base[a.type]) || fallback;
 
-  return { ...rec, range: "Custom Quote" };
+  const timelineBoost =
+    a.timeline === "ASAP (< 1 month)" ? 1.2 : a.timeline === "1-3 months" ? 1.08 : 1;
+  const businessBoost = a.business === "Enterprise" ? 1.15 : a.business === "SMB" ? 1.05 : 1;
+
+  const estimateRange = {
+    "Custom Website": [9999, 14999],
+    "Mobile Application": [14999, 24999],
+    "AI Solutions": [19999, 39999],
+    "CRM Solution": [24999, 49999],
+    "ERP Platform": [39999, 79999],
+    "Enterprise Software": [59999, 120000],
+  } as const;
+
+  const range = a.type ? estimateRange[a.type as keyof typeof estimateRange] : undefined;
+  const adjustedRange = range
+    ? range.map((price) => Math.round(price * timelineBoost * businessBoost))
+    : null;
+
+  const estimate = adjustedRange
+    ? adjustedRange[0] === adjustedRange[1]
+      ? `From ${formatPrice(adjustedRange[0])}*`
+      : `${formatPrice(adjustedRange[0])} - ${formatPrice(adjustedRange[1])}`
+    : rec.estimate;
+
+  return { ...rec, estimate };
 }
 
 export default function Estimator() {
@@ -59,8 +118,8 @@ export default function Estimator() {
   const recommendation = useMemo(() => getRecommendation(answers), [answers]);
 
   function select(key: keyof Answers, value: string) {
-    setAnswers((a) => ({ ...a, [key]: value }));
-    setTimeout(() => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1)), 200);
+    setAnswers((current) => ({ ...current, [key]: value }));
+    setTimeout(() => setStepIndex((current) => Math.min(current + 1, STEPS.length - 1)), 200);
   }
 
   function reset() {
@@ -76,8 +135,11 @@ export default function Estimator() {
         <div className="mb-10 text-center">
           <span className="eyebrow">Project Estimator</span>
           <h2 className="font-display mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Not sure what you need? Ask the estimator.
+            Get a quick estimate before the discovery call.
           </h2>
+          <p className="mt-4 text-muted">
+            Answer a few questions and we will suggest the right build type with a realistic starting price.
+          </p>
         </div>
 
         <div className="glass rounded-2xl p-8">
@@ -126,7 +188,7 @@ export default function Estimator() {
                 transition={{ duration: 0.3 }}
               >
                 <p className="mb-6 font-display text-xl text-ink">
-                  What&apos;s your timeline?
+                  What is your timeline?
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {TIMELINE_OPTIONS.map((opt) => (
@@ -186,10 +248,13 @@ export default function Estimator() {
                   {recommendation.tier}
                 </p>
                 <p className="font-display mt-1 text-xl text-royal">
-                  {recommendation.range}
+                  {recommendation.estimate}
                 </p>
                 <p className="mx-auto mt-4 max-w-sm text-sm text-muted">
                   {recommendation.note}
+                </p>
+                <p className="mx-auto mt-2 max-w-sm text-xs text-muted">
+                  {recommendation.hint}
                 </p>
 
                 <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -218,7 +283,7 @@ export default function Estimator() {
           {step !== "type" && step !== "result" && (
             <button
               type="button"
-              onClick={() => setStepIndex((i) => Math.max(i - 1, 0))}
+              onClick={() => setStepIndex((current) => Math.max(current - 1, 0))}
               data-cursor-active
               className="mt-6 flex items-center gap-1.5 font-mono text-xs text-muted transition-colors hover:text-ink"
             >
