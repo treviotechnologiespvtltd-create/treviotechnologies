@@ -50,7 +50,7 @@ export default function Navbar() {
             priority
           />
           <span className="font-display text-lg font-semibold tracking-tight">
-            trevio<span className="text-cyan">.</span>
+            Trevio<span className="text-cyan">.</span>
           </span>
         </a>
 

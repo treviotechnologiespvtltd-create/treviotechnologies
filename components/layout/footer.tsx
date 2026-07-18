@@ -59,11 +59,11 @@ export default function Footer() {
                 treviotechnologies@outlook.com
               </a>
               <a
-                href="tel:+917862927605"
+                href="tel:+917859889238"
                 className="flex items-center gap-2 transition-colors hover:text-cyan"
               >
                 <Phone size={15} />
-                +91 79902 49238
+                +91 78598 89238
               </a>
             </div>
           </div>
@@ -90,8 +90,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t border-line py-6 pb-20 text-xs text-muted sm:flex-row md:pb-6">
-          <p>� {new Date().getFullYear()} Trevio Technologies.</p>
-          <p className="font-mono">system status: all green</p>
+          <p>© {new Date().getFullYear()} Trevio Technologies. All rights reserved</p>
         </div>
       </div>
     </footer>
